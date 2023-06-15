@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<form action="" method="post">
+<select name="role" id="role">
+<option {% if role == admin %} selected {% endif %} value="ROLE_ADMIN">Admin</option>
+<option {% if role == user %} selected {% endif %}  value="ROLE_USER">User</option>
+</select>
+<button type="submit">Envoyer</button>
+</form>
+    
+{% endblock %}

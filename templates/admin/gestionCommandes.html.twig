@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion de commandes
+{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+	<div class="alert alert-success text-center w-50 mx-auto my-2">{{message}}</div>
+{% endfor %}
+<div class="container">
+	<h1 class="text-center">Gestion de commandes</h1>
+	<table class="table table-primary">
+		<thead class="text-center">
+			<td>Commande n°</td>
+			<td>Membre</td>
+			<td>Vehicule</td>
+			<td>Date et HeureDepart</td>
+			<td>Date et HeureFin</td>
+			<td>PrixTotal</td>
+			<td>Date et HeureEnregistrement</td>
+			<td>Actions</td>
+		</thead>
+		<tbody>
+			{% for item in commandes %}
+				<tr>
+					<td>{{item.id}}</td>
+					<td>{{item.user.pseudo}}</td>
+					<td>{{item.vehicule.titre}}</td>
+					<td>{{item.dateHeureDepart|date('d/m/Y à H:i:s')}}</td>
+					<td>{{item.dateHeureFin|date('d/m/Y à H:i:s')}}</td>
+					<td>{{item.prixTotal}}</td>
+					<td>{{item.dateEnregistrement|date('d/m/Y à H:i:s')}}</td>
+					<td>
+						<a href="#" class=" text-info">
+							<i class="fa fa-search"></i>
+						</a>
+						<a href="{{path('admin_user_edit', {id: item.id})}}" class="text-warning">
+							<i class="fa fa-edit"></i>
+						</a>
+						<a href="#" class="text-danger">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
