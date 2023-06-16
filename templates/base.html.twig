@@ -6,8 +6,10 @@
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
+		
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.0/lumen/bootstrap.min.css" integrity="sha512-irfgCuYJyYPzf35Zxk4tlz6rbpItRmi6OExKF3WsES2aZwTtlBXfWlb8trxTFkqs7axVFn/+07+h9xERC/Loew==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+		<link rel="stylesheet" href="src/assets/css/style.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> {% block stylesheets %}{% endblock %}{% block javascripts %}{% endblock %}
 		</head>
 		<body>
@@ -33,16 +35,18 @@
 							<li class="nav-item">
 								<a class="nav-link" href="#">About</a>
 							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="{{path('admin_vehicules')}}">Gestion Vehicules</a>
-									<a class="dropdown-item" href="{{path('admin_users')}}">Gestion des Membres</a>
-									<a class="dropdown-item" href="#">Something else here</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">Separated link</a>
-								</div>
-							</li>
+							{% if is_granted('ROLE_ADMIN') %}
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="{{path('admin_vehicules')}}">Gestion Vehicules</a>
+										<a class="dropdown-item" href="{{path('admin_users')}}">Gestion des Membres</a>
+										<a class="dropdown-item" href="{{path('commandes')}}">Gestion de Commandes</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#">Separated link</a>
+									</div>
+								</li>
+							{% endif %}
 						</ul>
 						{% if app.user %}
 							<a href="{{path('app_logout')}}" class="btn btn-danger">Déconnexion</a>

@@ -22,7 +22,7 @@ class AdminController extends AbstractController
     #[Route('/admin/edit/{id}', name: 'admin_edit')]
     public function gestion(Request $request, EntityManagerInterface $manager, VehiculeRepository $repo, Vehicule $vehicule = null) :Response
     {     
-        $voitures = $repo->findAll();
+        $vehicules = $repo->findAll();
 
         if($vehicule == null) 
         {
@@ -42,7 +42,7 @@ class AdminController extends AbstractController
         }
         
         return $this->render('admin/index.html.twig', [
-            'vehicules' => $voitures,
+            'vehicules' => $vehicules,
             'form' => $form,
             'editMode' => $vehicule->getId() != null,
         ]);
@@ -66,16 +66,17 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('admin/users', name: 'admin_users')]
+    #[Route('/admin/users', name: 'admin_users')]
     public function user(Request $request, EntityManagerInterface $manager, UserRepository $repo, User $user = null) {
         $users = $repo->findAll();
-
+        
         if($user == null) {
             $user = new User;
         }
 
         $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
+
         if($formUser->isSubmitted() && $formUser->isValid()) {
             $user->setDateEnregistrement(new \DateTime);
             $manager->persist($user);
@@ -89,13 +90,9 @@ class AdminController extends AbstractController
             'form' => $formUser,
             'editMode' => $user->getId() != null,
         ]);
-
-        return $this->render("admin/gestionUser.html.twig", [
-            'users' => $users
-        ]);
     }
 
-    #[Route('admin/user/edit{id}', name: 'admin_user_edit')]
+    #[Route('/admin/user/edit{id}', name: 'admin_user_edit')]
     public function userEdit(User $user) 
     {
         if(in_array("ROLE_ADMIN", $user->getRoles())) {
@@ -104,34 +101,16 @@ class AdminController extends AbstractController
         return $this->render ('admin/modifyUser.html.twig',['role' => $role] ) ;
     }
 
-    #[Route('admin/buy', name: 'admin_buy')]
-    public function buy(Request $request, EntityManagerInterface $manager, CommandeRepository $repo, Commande $commande = null, Vehicule $vehicule, User $user) {
-        $commandes = $repo->findAll();
+    #[Route('/admin/commandes', name: 'commandes')]
+    public function commande(CommandeRepository $repo) {
 
-        if ($commande == null) {
-            $commande = new commande;
-        }
+        $commandes = $repo->findAll();     
 
-        $formCommande = $this->createForm(CommandeType::class, $commande);
-        $formCommande->handleRequest($request);
+        return $this->render('admin/gestionCommandes.html.twig', [
+            'commandes' => $commandes,
+            // 'form' => $formCommande
 
-        
-        if($formCommande->isSubmitted() && $formCommande->isValid()) {
-
-            $dateDepart = $commande->getDateDepart();
-            $dateFin = $commande->getDateHeureFin();
-            $prix = $vehicule->getPrixJournalier();
-            $prixTotal = ($dateDepart - $dateFin) * $prix;
-            
-            $commande->setDateEnregistrement(new \DateTime)
-                    ->setPrixTotal($prixTotal)
-                    ->setUser($user)
-                    ->setVehicule($this->getId() . " - " . $this->getTitre());
-        }
-
-
-
-        return $this->render('admin/gestionCommandes.html.twig');
+        ]);
 
     }
 

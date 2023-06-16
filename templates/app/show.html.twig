@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Show vehicules
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="text-center">Show</h1>
+	<div class="container mx-auto">
+		<div class="card border-secondary mb-3 mt-5" style="max-width: 50rem;">
+			<img src="{{ vehicule.photo }}" alt="photo" width="350px" height="280px">
+			<div>
+				<h3 class="card-header mb-3">{{ vehicule.titre }}</h3>
+				<h5 class="card-title mb-3">{{ vehicule.description }}</h5>
+				<h5 class="card-title mb-3">Prix journalier:
+					{{ vehicule.prixJournalier }}
+					€</h5>
+			</div>
+		</div>
+	</div>
+</div>
+{% if app.user %}
+
+<div class="container">
+	{{ form_start(form ,{
+    attr: {
+    novalidate: 'novalidate'
+    }}) }}
+	{{ form_row(form.date_heure_depart) }}
+
+	{{ form_row(form.date_heure_fin) }}
+	<button type="submit" class="btn btn-primary">Enregistrer</button>
+
+	{{ form_end(form) }}
+    
+</div>
+{% else %}
+    <a href="{{ path('app_login')}}">connectez-vous</a> pour pouvoir commander
+{% endif %}
+{% endblock %}

@@ -42,8 +42,7 @@ class RegistrationFormType extends AbstractType
             ->add('civilite', ChoiceType::class, [                
                 'choices'  => [
                     'Femme' => 'femme',
-                    'Homme' => 'homme',
-                    'autres' => 'autres',
+                    'Homme' => 'homme'
                 ],
 
             ])
