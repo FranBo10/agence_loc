@@ -115,12 +115,14 @@ class AdminController extends AbstractController
         $formCommande = $this->createForm(CommandeType::class, $commande);
         $formCommande->handleRequest($request);
 
-        $dateDepart = $commande->getDateDepart();
-        $dateFin = $commande->getDateHeureFin();
-        $prix = $vehicule->getPrixJournalier();
-        $prixTotal = ($dateDepart - $dateFin) * $prix;
-
+        
         if($formCommande->isSubmitted() && $formCommande->isValid()) {
+
+            $dateDepart = $commande->getDateDepart();
+            $dateFin = $commande->getDateHeureFin();
+            $prix = $vehicule->getPrixJournalier();
+            $prixTotal = ($dateDepart - $dateFin) * $prix;
+            
             $commande->setDateEnregistrement(new \DateTime)
                     ->setPrixTotal($prixTotal)
                     ->setUser($user)
