@@ -13,11 +13,26 @@ class VehiculeType extends AbstractType
     {
         $builder
             // ->add('titre')
-            ->add('marque')
-            ->add('modele')
-            ->add('description')
-            ->add('photo')
-            ->add('prix_journalier')
+            ->add('marque', null, [
+                'label' => "Marque",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('modele', null, [
+                'label' => "Modèle",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('description', null, [
+                'label' => "Description",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('photo', null, [
+                'label' => "Photo",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('prix_journalier', null, [
+                'label' => "Prix journalier",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
             // ->add('date_enregistrement')
         ;
     }

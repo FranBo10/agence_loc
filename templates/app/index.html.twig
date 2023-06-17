@@ -1,45 +1,46 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Index
+{% extends 'base.html.twig' %} {% block title %}Index {% endblock %} {% block
+body %}
+<div class="container-fluid">
+  <div>
+    <div class="hero">
+      <div class="hero-background">
+        <h3 class="text-white">Bienvenue à bord</h3>
+        <p class="text-white">Location de voitures 24/24 et 7j/7</p>
+      </div>
+    </div>
+    <div class="row mt-5">
+      {% for item in vehicules %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-secondary mb-3">
+          <div class="row g-0">
+            <div class="col-4">
+              <img
+                src="{{ item.photo }}"
+                alt="{{ item.marque }}"
+                style="object-fit: cover"
+                width="100%"
+                height="auto"
+              />
+            </div>
+            <div class="col-8">
+              <div class="card-body">
+                <h3 class="card-header">{{ item.titre }}</h3>
+                <h5 class="card-title" style="min-height: 350px">{{ item.description }}</h5>
+                <h5 class="card-title">
+                  Prix journalier: {{ item.prixJournalier }} €
+                </h5>
+                <a
+                  href="{{ path('show', { id: item.id }) }}"
+                  class="btn btn-dark"
+                  >Réserver et payer</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %} 
+    </div>
+  </div>
+</div>
 {% endblock %}
-
-{% block body %}
-	<div class="container-fluid">
-		<div>
-			<div class="hero">
-				<div class="hero-background">
-					<img src="https://www.automobile-magazine.fr/asset/cms/1500x704/200462/config/148127/continental-gt-mulliner-1.jpg?webp=1" alt="bentley">
-				</div>
-				<div class="hero-content">
-					<h3 class="text-white">Bienvenue à bord</h3>
-					<p class="text-white">Location de voitures 24/24 et 7j/7</p>
-				</div>
-			</div>
-			<div class="row">
-				{% for item in vehicules %}
-					<div class="col-md-6 col-lg-4">
-						<div class="card border-secondary mb-3">
-							<div class="row g-0">
-								<div class="col-4">
-									<img src="{{ item.photo }}" alt="{{ item.marque }}" style="object-fit:cover" width="100%" height="auto">
-								</div>
-								<div class="col-8">
-									<div class="card-body">
-										<h3 class="card-header">{{ item.titre }}</h3>
-										<h5 class="card-title">{{ item.description }}</h5>
-										<h5 class="card-title">Prix journalier:
-											{{ item.prixJournalier }}
-											€</h5>
-										<a href="{{ path('show', {id: item.id}) }}" class="btn btn-success">Réserver et payer</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam exercitationem deserunt unde optio incidunt.
-			</div>
-		</div>
-
-
-	{% endblock %}

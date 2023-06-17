@@ -1,96 +1,96 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Gestion des membres {% endblock
+%} {% block body %} {% for message in app.flashes('success') %}
+<div class="alert alert-success text-center w-50 mx-auto my-2">
+  {{ message }}
+</div>
+{% endfor %}
+<div class="container">
+  <h1 class="text-center">Gestion des membres</h1>
+  <table class="table table-dark">
+    <thead class="text-center">
+      <td>Membre n°</td>
+      <td>Pseudo</td>
+      <td>Nom</td>
+      <td>Prenom</td>
+      <td>Email</td>
+      <td>Civilité</td>
+      <td>Statut</td>
+      <td>Date_enregistrement</td>
+      <td>Actions</td>
+    </thead>
 
-{% block title %}Gestion des membres
-{% endblock %}
+    <tbody class="text-center">
+      {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.pseudo }}</td>
+        <td>{{ user.nom }}</td>
+        <td>{{ user.prenom }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.civilite }}</td>
+        <td>
+          {% for item in user.roles %}
+          {{ item }}
+          {% endfor %}
+        </td>
+        <td>{{user.dateEnregistrement|date('d/m/Y à H:i:s')}}</td>
+        <td>
+          <a href="#" class="text-info">
+            <i class="fa fa-search"></i>
+          </a>
+          <a
+            href="{{ path('admin_user_edit', { id: user.id }) }}"
+            class="text-warning"
+          >
+            <i class="fa fa-edit"></i>
+          </a>
+          <a href="#" class="text-danger">
+            <i class="fa fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="container mt-5">
+  <div class="row">
+    {{
+      form_start(form, {
+        attr: {
+          novalidate: "novalidate"
+        }
+      })
+    }}
 
-{% block body %}
+    <div class="row">
+      <div class="col-6">
+        {{ form_row(form.pseudo) }}
+      </div>
+      <div class="col-6">
+        {{ form_row(form.password) }}
+      </div>
+      <div class="col-6">
+        {{ form_row(form.nom) }}
+      </div>
+      <div class="col-6">
+        {{ form_row(form.prenom) }}
+      </div>
+      <div class="col-6">
+        {{ form_row(form.email) }}
+      </div>
+      <div class="col-6">
+        {{ form_row(form.civilite) }}
+      </div>
+      <div class="col-6">
+        {{ form_row(form.roles) }}
+      </div>
+    </div>
 
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success text-center w-50 mx-auto my-2">{{message}}</div>
-	{% endfor %}
-	<div class="container">
-		<h1 class="text-center">Gestion des membres</h1>
-		<table class="table table-primary">
-			<thead class="text-center">
-				<td>Membre n°</td>
-				<td>Pseudo</td>
-				<td>Nom</td>
-				<td>Prenom</td>
-				<td>Email</td>
-				<td>Civilité</td>
-				<td>Statut</td>
-				<td>Date_enregistrement</td>
-				<td>Actions</td>
-			</thead>
+    <button type="submit" class="btn btn-dark">Enregistrer</button>
 
-			<tbody class="text-center">
-				{% for user in users %}
-					<tr>
-						<td>{{user.id}}</td>
-						<td>{{user.pseudo}}</td>
-						<td>{{user.nom}}</td>
-						<td>{{user.prenom}}</td>
-						<td>{{user.email}}</td>
-						<td>{{user.civilite}}</td>
-						<td>
-							{% for item in user.roles %}
-								{{item}}
-							{% endfor %}
-						</td>
-						<td>{{user.dateEnregistrement|date('d/m/Y à H:i:s')}}</td>
-						<td>
-							<a href="#" class=" text-info">
-								<i class="fa fa-search"></i>
-							</a>
-							<a href="{{path('admin_user_edit', {id: user.id})}}" class="text-warning">
-								<i class="fa fa-edit"></i>
-							</a>
-							<a href="#" class="text-danger">
-								<i class="fa fa-trash"></i>
-							</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-	<div class="container mt-5">
-		<div class="row">
-			{{ form_start(form, {
-				attr: {
-					novalidate: 'novalidate'
-				}
-			}) }}
-
-			<div class="row">
-				<div class="col-6">
-					{{ form_row(form.pseudo) }}
-				</div>
-				<div class="col-6">
-					{{ form_row(form.password) }}
-				</div>
-				<div class="col-6">
-					{{ form_row(form.nom) }}
-				</div>
-				<div class="col-6">
-					{{ form_row(form.prenom) }}
-				</div>
-				<div class="col-6">
-					{{ form_row(form.email) }}
-				</div>
-				<div class="col-6">
-					{{ form_row(form.civilite) }}
-				</div>
-				<div class="col-6">
-					{{ form_row(form.roles) }}
-				</div>
-			</div>
-
-			<button type="submit" class="btn btn-primary">Enregistrer</button>
-
-			{{ form_end(form) }}
-		</div>
-	</div>
-
+    {{ form_end(form) }}
+  </div>
+</div>
 
 {% endblock %}

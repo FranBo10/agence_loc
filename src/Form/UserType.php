@@ -13,7 +13,10 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', null, [
+                'label' => "E-Mail",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
             ->add('roles', ChoiceType::class, [                
                 'choices'  => [
                     'admin' => 'ROLE_ADMIN',
@@ -23,11 +26,25 @@ class UserType extends AbstractType
                 'multiple' => true,
 
             ])  
-            ->add('password')
-            ->add('pseudo')
-            ->add('nom')
-            ->add('prenom')
-            ->add('civilite', ChoiceType::class, [                
+            ->add('password', null, [
+                'label' => "Mot de passe",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('pseudo', null, [
+                'label' => "Pseudo",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('nom', null, [
+                'label' => "Nom",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('prenom', null, [
+                'label' => "Prénom",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('civilite', ChoiceType::class, [
+                'label' => "Prénom",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],             
                 'choices'  => [
                     'Femme' => 'femme',
                     'Homme' => 'homme'

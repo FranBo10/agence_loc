@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Luxurious+Roman&family=Roboto&display=swap');
+
+body {
+  font-family: 'Luxurious Roman', Arial, Helvetica, sans-serif
+}
+
+.hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 600px;
+  margin: auto;
+  padding: 50px 20px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.416) , transparent), url('../img/bentley.jpg');
+  background-size: cover;
+  background-position: center; 
+  color: #fff;
+  text-align: center;
+}
+
+.hero h1 {
+  text-shadow: 1px 1px 2px black;
+}
+
+.hero-background {
+  text-align: center;
+  margin-bottom: 40px;
+}

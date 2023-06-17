@@ -18,10 +18,22 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prenom')
-            ->add('nom')
-            ->add('pseudo')
-            ->add('email')
+            ->add('prenom', null, [
+                'label' => "Prénom",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('nom', null, [
+                'label' => "Nom",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('pseudo', null, [
+                'label' => "Pseudo",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
+            ->add('email', null, [
+                'label' => "E-Mail",
+                'label_attr' => ['class' => 'text-white bg-dark p-1 rounded'],
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -38,16 +50,14 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-              ])
-            ->add('civilite', ChoiceType::class, [                
+            ])
+            ->add('civilite', ChoiceType::class, [
                 'choices'  => [
                     'Femme' => 'femme',
                     'Homme' => 'homme'
                 ],
 
-            ])
-            
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

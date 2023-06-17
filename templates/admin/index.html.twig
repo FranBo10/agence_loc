@@ -1,85 +1,91 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Gestion {% endblock %} {% block
+body %} {% for message in app.flashes('success') %}
+<div class="alert alert-success text-center w-50 mx-auto my-2">
+  {{ message }}
+</div>
+{% endfor %}
+<div class="container">
+  <h3 class="text-center">Gestion de vehicules</h3>
+  <table class="table table-dark">
+    <thead class="text-center">
+      <td>Vehicule</td>
+      <td>Titre</td>
+      <td>Marque</td>
+      <td>Modèle</td>
+      <td>Description</td>
+      <td>Photo</td>
+      <td>Prix</td>
+      <td>Actions</td>
+    </thead>
 
-{% block title %}Gestion
-{% endblock %}
+    <tbody class="text-center">
+      {% for item in vehicules %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.titre }}</td>
+        <td>{{ item.marque }}</td>
+        <td>{{ item.modele }}</td>
+        <td>{{ item.description }}</td>
+        <td>
+          <img
+            src="{{ item.photo }}"
+            alt="{{ item.marque }}"
+            width="100px"
+            height="120px"
+          />
+        </td>
+        <td>{{ item.prixJournalier }}</td>
+        <td>
+          <a href="{{ path('admin_show', { id: item.id }) }}" class="text-info">
+            <i class="fa fa-search"></i>
+          </a>
+          <a
+            href="{{ path('admin_edit', { id: item.id }) }}"
+            class="text-warning"
+          >
+            <i class="fa fa-edit"></i>
+          </a>
+          <a
+            href="{{ path('admin_delete', { id: item.id }) }}"
+            class="text-danger"
+          >
+            <i class="fa fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="container mt-5">
+  {{
+    form_start(form, {
+      attr: {
+        novalidate: "novalidate"
+      }
+    })
+  }}
+  <div class="row">
+    <div class="col-6">
+      {{ form_row(form.marque) }}
+    </div>
+    <div class="col-6">
+      {{ form_row(form.modele) }}
+    </div>
+    <div class="col-6">
+      {{ form_row(form.description) }}
+    </div>
+    <div class="col-6">
+      {{ form_row(form.photo) }}
+    </div>
+    <div class="col-6">
+      {{ form_row(form.prix_journalier) }}
+    </div>
 
-{% block body %}
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success text-center w-50 mx-auto my-2">{{message}}</div>
-	{% endfor %}
-	<div class="container">
-		<h3 class="text-center">Gestion de vehicules</h3>
-		<table class="table table-primary">
-			<thead class="text-center">
-				<td>Vehicule</td>
-				<td>Titre</td>
-				<td>Marque</td>
-				<td>Modèle</td>
-				<td>Description</td>
-				<td>Photo</td>
-				<td>Prix</td>
-				<td>Actions</td>
-			</thead>
+    <button type="submit" class="btn btn-dark mb-3">Enregistrer</button>
 
-			<tbody class="text-center">
-				{% for item in vehicules %}
-					<tr>
-						<td>{{item.id}}</td>
-						<td>{{item.titre}}</td>
-						<td>{{item.marque}}</td>
-						<td>{{item.modele}}</td>
-						<td>{{item.description}}</td>
-						<td>
-							<img src="{{item.photo}}" alt="{{item.marque}}" width="100px" height="120px">
-						</td>
-						<td>{{item.prixJournalier}}</td>
-						<td>
-							<a href="{{path('admin_show', {id: item.id})}}" class=" text-info">
-								<i class="fa fa-search"></i>
-							</a>
-							<a href="{{path('admin_edit', {id: item.id})}}" class="text-warning">
-								<i class="fa fa-edit"></i>
-							</a>
-							<a href="{{path('admin_delete', {id: item.id})}}" class="text-danger">
-								<i class="fa fa-trash"></i>
-							</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-	<div class="container mt-5">
-
-
-		{{form_start(form, {
-    attr: {
-        novalidate: 'novalidate'
-    }
-})}}
-		<div class="row">
-			<div class="col-6">
-				{{ form_row(form.marque)}}
-			</div>
-			<div class="col-6">
-				{{ form_row(form.modele)}}
-			</div>
-			<div class="col-6">
-				{{ form_row(form.description)}}
-			</div>
-			<div class="col-6">
-				{{ form_row(form.photo)}}
-			</div>
-			<div class="col-6">
-				{{ form_row(form.prix_journalier)}}
-			</div>
-
-
-			<button type="submit" class="btn btn-primary mb-3">Enregistrer</button>
-
-			{{ form_end(form)}}
-		</div>
-
-	</div>
+    {{ form_end(form) }}
+  </div>
+</div>
 
 {% endblock %}
