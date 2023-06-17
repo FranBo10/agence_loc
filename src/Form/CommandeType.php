@@ -6,14 +6,21 @@ use App\Entity\Commande;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CommandeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date_heure_depart')
-            ->add('date_heure_fin')
+            ->add('date_heure_depart', DateType::class, [
+                'label' => 'Date de départ',
+                'widget' => 'single_text',
+            ])
+            ->add('date_heure_fin', DateType::class, [
+                'label' => "Jour de dêpot ",
+                'widget' => 'single_text',
+            ])
             // ->add('prix_total')
             // ->add('date_enregistrement')
             // ->add('user')
