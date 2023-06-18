@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Commande;
 use App\Entity\Vehicule;
+use App\Form\CommandeType;
 use App\Form\VehiculeType;
 use App\Repository\UserRepository;
 use App\Repository\CommandeRepository;
@@ -100,16 +102,55 @@ class AdminController extends AbstractController
         return $this->render('admin/modifyUser.html.twig', ['role' => $role]);
     }
 
-    #[Route('/admin/commandes', name: 'commandes')]
-    public function commande(CommandeRepository $repo)
-    {
 
+    #[Route('/admin/commandes', name: 'commandes')]
+    public function commande(Request $request, EntityManagerInterface $manager, CommandeRepository $repo, Commande $commande, Vehicule $vehicule, User $user)
+    {
         $commandes = $repo->findAll();
+
+        if ($commande = null) {
+            $commande = new commande;
+        }
+
+        $form = $this->createForm(CommandeType::class, $commande);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = new User;
+            $vehicule = new Vehicule;
+
+            $dateDepart = $commande->getDateHeureDepart();
+            $dateFin = $commande->getDateHeureFin();
+            $prix = $vehicule->getPrixJournalier();
+            $diff = $dateFin->diff($dateDepart);
+            $days = $diff->days;
+            $prixTotal = $days * $prix;
+
+            $commande->setPrixTotal($prixTotal)
+                ->setDateEnregistrement(new \DateTime)
+                ->setUser($user)
+                ->setVehicule($vehicule);
+            $manager->persist($commande);
+            $manager->flush();
+            $this->addFlash('success', 'Commande enregistré');
+            return $this->redirectToRoute('commandes');
+        }
 
         return $this->render('admin/gestionCommandes.html.twig', [
             'commandes' => $commandes,
-            // 'form' => $formCommande
+            'form' => $form,
+            'vehicule' => $vehicule,
+            'user' => $user
 
         ]);
+    }
+
+    #[Route('admin/commandes/delete/{id}', name: 'commande_delete')]
+    public function deleteCommande(EntityManagerInterface $manager, Commande $commande)
+    {
+        $manager->remove($commande);
+        $manager->flush();
+        $this->addFlash("success", "La commande a été supprimée");
+        return $this->redirectToRoute('commandes');
     }
 }

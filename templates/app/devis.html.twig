@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %} {% block title %}Devis commande {% endblock %} {%
+block body %} 
+
+<h1 class="text-center">Commande n°: {{ commande.id }}</h1>
+<h2 class="text-center">Date de la commande: {{ commande.dateEnregistrement|date('d/m/Y ') }}</h2>
+<div class="container mx-auto">
+  <div class="card border-secondary mb-3 mt-5 mx-auto" style="max-width: 50rem">
+    <div class="d-flex gap-1">
+      <img
+        src="{{ commande.vehicule.photo }}"
+        alt="photo"
+        width="350px"
+        height="280px"
+      />
+      <div class="flex-column">
+        <h5 class="card-title mb-3 p-2">{{ commande.vehicule.description }}</h5>
+        <ul class="list-unstyled">
+          <li>
+            <h5 class="card-title mb-3 ms-2">
+              Date de départ:
+              {{ commande.dateHeureDepart|date('d/m/y') }}
+            </h5>
+          </li>
+          <li>
+            <h5 class="card-title mb-3 ms-2">
+              Date de retour:
+              {{ commande.dateHeureFin|date('d/m/y') }}
+            </h5>
+          </li>
+          <li>
+            <h5 class="card-title mb-3 ms-2">
+              Prix journalier:
+              {{ commande.vehicule.prixJournalier }}
+              €
+            </h5>
+          </li>
+          <li>
+            <h3 class="card-title mb-3 ms-2">
+              Prix à regler:
+              {{ commande.prixTotal }}
+              €
+            </h3>
+        </li>
+          </li>
+        </ul>
+        <button class="btn btn-dark">Payer</button>
+      </div>
+    </div>
+  </div>
+</div>
+ {% endblock %}
