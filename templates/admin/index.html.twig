@@ -31,7 +31,7 @@ body %} {% for message in app.flashes('success') %}
             src="{{ item.photo }}"
             alt="{{ item.marque }}"
             width="100px"
-            height="120px"
+            height="80px"
           />
         </td>
         <td>{{ item.prixJournalier }}</td>
@@ -58,6 +58,7 @@ body %} {% for message in app.flashes('success') %}
   </table>
 </div>
 <div class="container mt-5">
+  <h2 class="text-center mb-3 p-3">Ajoutez une voiture</h2>
   {{
     form_start(form, {
       attr: {
